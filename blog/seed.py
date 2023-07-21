@@ -12,7 +12,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from helpers import get_assets
 from blog.models import Post, User, Comment
 from core.base import Base
-# from core.database import engine, Session
+from core.database import engine, Session
 
 
 def read_users(data: List[Dict[str, Any]]) -> List[User]:
@@ -44,7 +44,7 @@ async def fill_database():
     # engine = create_engine(url)
     # # create_database(url)  # Create the test database.
     Base.metadata.create_all(engine)
-    print(engine)
+    # print(engine)
     data = json.load(open(get_assets('seed/blog.json')))
     with Session() as session:
         session.add_all((read_users(data['users'])))

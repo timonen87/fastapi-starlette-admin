@@ -14,7 +14,6 @@ async def homepage(request):
         "index.html", {"request": request, "config": config}
     )
 
-
 app = Starlette(
     routes=[
         Route("/", homepage),

@@ -5,7 +5,7 @@ from sqlalchemy_file import ImageField, File
 from sqlalchemy_file.validators import SizeValidator
 
 from jinja2 import Template
-from sqlalchemy import Column, String, Integer, Enum, JSON, DateTime, ForeignKey, func, Text, sql
+from sqlalchemy import Column, String, Integer, Enum, JSON, DateTime, ForeignKey, func, Text, sql, TEXT
 from sqlalchemy.orm import relationship
 from pydantic import EmailStr
 from starlette.requests import Request
@@ -19,6 +19,7 @@ class Gender(str, enum.Enum):
     MALE = "male"
     FEMALE = "female"
     UNKNOWN = "unknown"
+
 class User(Base):
     __tablename__ = 'user'
 
@@ -62,7 +63,7 @@ class Post(Base):
 
     id: Optional[int] = Column(Integer, primary_key=True)
     title: str = Column(String(100))
-    content = Column(Text)
+    content = Column(TEXT)
     tags: List[str] = Column(JSON)
     published_at: Optional[datetime] = Column(DateTime(timezone=True), server_default=sql.func.now())
     # published_at: Optional[datetime] = Column( default=datetime.utcnow)
@@ -85,7 +86,7 @@ class Post(Base):
 class Comment(Base):
     __tablename__ = 'comment'
     pk: Optional[int] = Column(Integer,primary_key=True)
-    content = Column(Text)
+    content = Column(TEXT)
     created_at: Optional[datetime] = Column(DateTime(timezone=True), server_default=sql.func.now())
     # created_at: Optional[datetime] = Column( default=datetime.utcnow)
 
