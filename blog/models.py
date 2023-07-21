@@ -66,6 +66,9 @@ class Post(Base):
     content = Column(TEXT)
     tags: List[str] = Column(JSON)
     published_at: Optional[datetime] = Column(DateTime(timezone=True), server_default=sql.func.now())
+    # published_at: Optional[datetime] = Field(
+    #     sa_column=Column(DateTime(timezone=True), default=datetime.utcnow)
+    # )
     # published_at: Optional[datetime] = Column( default=datetime.utcnow)
     publisher_id = Column(Integer, ForeignKey("user.id"))
     publisher = relationship('User', back_populates='posts')

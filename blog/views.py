@@ -7,7 +7,7 @@ from starlette.requests import Request
 from starlette.responses import Response
 from starlette.templating import Jinja2Templates
 from starlette_admin import CustomView, EmailField, TagsField
-from starlette_admin.contrib.sqlmodel import ModelView
+from starlette_admin.contrib.sqla import ModelView
 from starlette_admin.exceptions import FormValidationError
 
 from .fields import MarkdownField, CommentCounterField
