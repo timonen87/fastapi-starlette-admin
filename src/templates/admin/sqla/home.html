@@ -30,7 +30,8 @@
                         <div class="list-group-item">
                             <div class="d-flex align-items-center">
                                 <div class="flex-fill d-flex flex-column">
-                                    <h3>{{post.title}}</h3>
+                                    <h3><a class="ms-3"
+                                           href="{{url_for(__name__ ~ ':detail', identity='post',pk=post.id)}}">{{post.title}}</a></h3>
                                     <div class="d-flex flex-row">
                                     <span class="text-muted">
                                     <svg xmlns="http://www.w3.org/2000/svg"

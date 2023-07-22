@@ -18,7 +18,7 @@ from starlette_admin.i18n import SUPPORTED_LOCALES
 from starlette_admin.contrib.sqla import Admin as BaseAdmin
 from starlette_admin.views import Link
 
-from conf import config
+from config import config
 from blog.models import Post, User, Comment
 from blog.auth import MyAuthProvider
 # from blog.models import Comment, Post, User
@@ -33,7 +33,7 @@ StorageManager.add_storage("user-avatar", container)
 
 class Admin(BaseAdmin):
     def custom_render_js(self, request: Request) -> Optional[str]:
-        return request.url_for("statics", path="js/custom_render.js")
+        return request.url_for("static", path="js/custom_render.js")
 
 
 # app.mount("/statics",StaticFiles(directory="statics", html=True), name="statics")

@@ -61,7 +61,7 @@ class MyAuthProvider(AuthProvider):
         user = request.state.user  # Retrieve current user
         photo_url = None
         if user["avatar"] is not None:
-            photo_url = request.url_for("statics", path=user["avatar"])
+            photo_url = request.url_for("static", path=user["avatar"])
         return AdminUser(username=user["name"], photo_url=photo_url)
 
     async def logout(self, request: Request, response: Response) -> Response:
