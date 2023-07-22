@@ -18,7 +18,6 @@ from starlette_admin.i18n import SUPPORTED_LOCALES
 from starlette_admin.contrib.sqla import Admin as BaseAdmin
 from starlette_admin.views import Link
 
-
 from conf import config
 from blog.models import Post, User, Comment
 from blog.auth import MyAuthProvider
@@ -37,7 +36,7 @@ class Admin(BaseAdmin):
         return request.url_for("statics", path="js/custom_render.js")
 
 
-
+# app.mount("/statics",StaticFiles(directory="statics", html=True), name="statics")
 
 admin = Admin(
     engine,
@@ -56,22 +55,22 @@ admin = Admin(
 admin.add_view(UserView(User, icon="fa fa-users"))
 admin.add_view(PostView(Post, label="blog Posts", icon="fa fa-blog"))
 admin.add_view(CommentView(Comment, icon="fa fa-comments"))
-# admin.add_view(
-#     DropDown(
-#         "Resources",
-#         icon="fa fa-book",
-#         views=[
-#             Link(
-#                 "StarletteAdmin Docs",
-#                 url="https://jowilf.github.io/starlette-admin/",
-#                 target="_blank",
-#             ),
-#             Link(
-#                 "SQLAlchemy-file Docs",
-#                 url="https://jowilf.github.io/sqlalchemy-file/",
-#                 target="_blank",
-#             ),
-#         ],
-#     )
-# )
+admin.add_view(
+    DropDown(
+        "Resources",
+        icon="fa fa-book",
+        views=[
+            Link(
+                "StarletteAdmin Docs",
+                url="https://jowilf.github.io/starlette-admin/",
+                target="_blank",
+            ),
+            Link(
+                "SQLAlchemy-file Docs",
+                url="https://jowilf.github.io/sqlalchemy-file/",
+                target="_blank",
+            ),
+        ],
+    )
+)
 admin.add_view(Link(label="Go Back to Home", icon="fa fa-link", url="/"))
