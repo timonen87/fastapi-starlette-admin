@@ -1,6 +1,6 @@
 import asyncio
 
-from blog.seed import fill_database as fill_sqla_database
+from admin_app.seed import fill_database as fill_sqla_database
 
 
 async def main():
