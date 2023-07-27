@@ -11,7 +11,10 @@ from starlette_admin.contrib.sqla import ModelView
 from starlette_admin.exceptions import FormValidationError
 
 from .fields import MarkdownField, CommentCounterField
-from .models import Comment, Post, User
+# from models import Comment, Post, User
+from models.user import User
+from models.post import Post
+from models.comment import Comment
 
 
 class UserView(ModelView):

@@ -19,7 +19,9 @@ from starlette_admin.contrib.sqla import Admin as BaseAdmin
 from starlette_admin.views import Link
 
 from config import config
-from admin_app.models import Post, User, Comment
+from models.user import User
+from models.post import Post
+from models.comment import Comment
 from admin_app.auth import MyAuthProvider
 # from blog.models import Comment, Post, User
 from admin_app.views import CommentView, HomeView, PostView, UserView

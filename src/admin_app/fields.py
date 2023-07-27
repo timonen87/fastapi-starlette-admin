@@ -6,7 +6,7 @@ from markupsafe import Markup
 from starlette.requests import Request
 from starlette_admin import RequestAction, TextAreaField, StringField
 
-from admin_app.models import User
+from models.user import User
 
 
 class MarkdownField(TextAreaField):

@@ -3,7 +3,10 @@ from typing import Any, Dict, List
 from sqlalchemy_file import File
 from sqlalchemy_file.storage import StorageManager
 from helpers import get_assets
-from admin_app.models import Post, User, Comment
+# from models import Post, User, Comment
+from models.user import User
+from models.post import Post
+from models.comment import Comment
 from core.base import Base
 from core.database import engine, Session
 

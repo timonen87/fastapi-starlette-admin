@@ -20,27 +20,14 @@ app.mount("/static", StaticFiles(directory="static", html=True), name="static")
 # def get_main(request: Request):
 #     return templates.TemplateResponse("index.html", {"request": request, "config": config})
 
-@app.get('/home')
-async def main(request: Request):
-    return templates.TemplateResponse("home/index.html", {"request": request})
+# @app.get('/home')
+# async def main(request: Request):
+#     return templates.TemplateResponse("home/index.html", {"request": request})
 
-@app.get('/{path}')
-async def get_page(request: Request, path: str):
-    return templates.TemplateResponse(f"home/{path}", {"request": request})
+# @app.get('/{path}')
+# async def get_page(request: Request, path: str):
+#     return templates.TemplateResponse(f"home/{path}", {"request": request})
 
 admin_star.mount_to(app)
-# async def homepage(request):
-#     return Jinja2Templates("templates").TemplateResponse(
-#         "index.html", {"request": request, "config": config}
-#     )
-
-# app = Starlette(
-#     routes=[
-#         Route("/", homepage),
-#         Mount("/statics", app=StaticFiles(directory="statics"), name="statics"),
-#     ]
-# )
-
-# app.include_router(router_pages)
 
 

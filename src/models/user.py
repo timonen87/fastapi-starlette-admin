@@ -11,7 +11,7 @@ from pydantic import EmailStr
 from starlette.requests import Request
 
 from core.base import Base
-# from user.models import User
+from . import post
 from helpers import UploadFile
 
 
@@ -23,11 +23,11 @@ class Gender(str, enum.Enum):
 class User(Base):
     __tablename__ = 'user'
 
-    id: Optional[int] = Column(Integer, primary_key=True)
+    id: int = Column(Integer, primary_key=True)
     full_name: str = Column(String(30), index=True)
     sex = Column(Enum(Gender), default=Gender.UNKNOWN, index=True)
     username: EmailStr = Column(String, index=True, nullable=False)
-    email = Column(String, index=True, default='mail@mail.ru')
+    email: EmailStr = Column(String, index=True, default='mail@mail.ru')
     hashed_password: str = Column(String, default='sdfsdfsdffsdffsd')
     is_admin: Boolean = Column(Boolean, default=False)
     is_active: Boolean = Column(Boolean, default=True)
@@ -61,47 +61,3 @@ class User(Base):
             " %}obj.full_name[:2]{%endif%}</span>{{obj.full_name}} <div>"
         )
         return Template(template_str, autoescape=True).render(obj=self, url=url)
-
-class Post(Base):
-    __tablename__ = 'post'
-
-    id: Optional[int] = Column(Integer, primary_key=True)
-    title: str = Column(String(100))
-    content = Column(TEXT)
-    tags: List[str] = Column(JSON)
-    published_at: Optional[datetime] = Column(DateTime(timezone=True), server_default=sql.func.now())
-    # published_at: Optional[datetime] = Field(
-    #     sa_column=Column(DateTime(timezone=True), default=datetime.utcnow)
-    # )
-    # published_at: Optional[datetime] = Column( default=datetime.utcnow)
-    publisher_id = Column(Integer, ForeignKey("user.id"))
-    publisher = relationship('User', back_populates='posts')
-
-    comments = relationship('Comment', back_populates='post')
-
-    async def __admin_reper__(self, request: Request):
-        return self.title
-
-    async def __admin_select2_repr__(self, request: Request) -> str:
-        template_str = (
-            "<span><strong>Title: </strong>{{obj.title}}, <strong>Publish by:"
-            " </strong>{{obj.publisher.full_name}}</span>"
-        )
-        return Template(template_str, autoescape=True).render(obj=self)
-
-
-class Comment(Base):
-    __tablename__ = 'comment'
-    pk: Optional[int] = Column(Integer,primary_key=True)
-    content = Column(TEXT)
-    created_at: Optional[datetime] = Column(DateTime(timezone=True), server_default=sql.func.now())
-    # created_at: Optional[datetime] = Column( default=datetime.utcnow)
-
-    post_id: Optional[int] = Column(Integer, ForeignKey('post.id'))
-    post = relationship('Post', back_populates='comments')
-
-    user_id: Optional[int] = Column(Integer, ForeignKey('user.id'))
-    user = relationship('User', back_populates='comments')
-
-
-
