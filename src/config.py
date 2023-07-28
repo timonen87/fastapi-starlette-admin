@@ -28,7 +28,7 @@ class Config(BaseSettings):
     mongo_host: str = "mongodb://127.0.0.1:27017/"
     mongo_db: str = "demo"
     upload_dir: str = "upload/"
-    secret: str = "123456789"
+    secret: str = os.environ.get("SECRET_AUTH")
     gtag: Optional[str] = None
 
 

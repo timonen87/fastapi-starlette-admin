@@ -2,7 +2,8 @@ from typing import Any
 
 from sqlalchemy.ext.declarative import as_declarative
 
-from .database import Session, engine
+from .database import SessionLocal, engine
+
 
 @as_declarative()
 class Base:

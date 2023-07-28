@@ -5,7 +5,20 @@ from sqlalchemy_file import ImageField, File
 from sqlalchemy_file.validators import SizeValidator
 
 from jinja2 import Template
-from sqlalchemy import Column, String, Integer, Enum, JSON, DateTime, ForeignKey, func, Text, sql, TEXT, Boolean
+from sqlalchemy import (
+    Column,
+    String,
+    Integer,
+    Enum,
+    JSON,
+    DateTime,
+    ForeignKey,
+    func,
+    Text,
+    sql,
+    TEXT,
+    Boolean,
+)
 from sqlalchemy.orm import relationship
 from pydantic import EmailStr
 from starlette.requests import Request
@@ -16,21 +29,20 @@ from . import comment
 
 
 class Post(Base):
-    __tablename__ = 'post'
+    __tablename__ = "post"
 
     id: Optional[int] = Column(Integer, primary_key=True)
     title: str = Column(String(100))
     content = Column(TEXT)
     tags: List[str] = Column(JSON)
-    published_at: Optional[datetime] = Column(DateTime(timezone=True), server_default=sql.func.now())
-    # published_at: Optional[datetime] = Field(
-    #     sa_column=Column(DateTime(timezone=True), default=datetime.utcnow)
-    # )
-    # published_at: Optional[datetime] = Column( default=datetime.utcnow)
-    publisher_id = Column(Integer, ForeignKey("user.id"))
-    publisher = relationship('User', back_populates='posts')
+    published_at: Optional[datetime] = Column(
+        DateTime(timezone=True), server_default=sql.func.now()
+    )
 
-    comments = relationship('Comment', back_populates='post')
+    publisher_id = Column(Integer, ForeignKey("user.id"))
+    publisher = relationship("User", back_populates="posts")
+
+    comments = relationship("Comment", back_populates="post")
 
     async def __admin_reper__(self, request: Request):
         return self.title

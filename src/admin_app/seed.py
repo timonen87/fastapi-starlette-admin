@@ -3,6 +3,7 @@ from typing import Any, Dict, List
 from sqlalchemy_file import File
 from sqlalchemy_file.storage import StorageManager
 from helpers import get_assets
+
 # from models import Post, User, Comment
 from models.user import User
 from models.post import Post
@@ -28,6 +29,7 @@ def read_posts(data: List[Dict[str, Any]]) -> List[Post]:
 def read_comments(data: List[Dict[str, Any]]) -> List[Comment]:
     return [Comment(**value) for value in data]
 
+
 def clear_storage():
     container = StorageManager.get("user-avatar")
     for obj in container.list_objects():
@@ -41,15 +43,13 @@ async def fill_database():
     # # create_database(url)  # Create the test database.
     Base.metadata.create_all(engine)
     # print(engine)
-    data = json.load(open(get_assets('seed/blog.json')))
+    data = json.load(open(get_assets("seed/blog.json")))
     # print(data)
     with Session() as session:
-        session.add_all((read_users(data['users'])))
+        session.add_all((read_users(data["users"])))
         session.add_all(read_posts(data["posts"]))
         session.add_all(read_comments(data["comments"]))
         session.commit()
-
-
 
 
 DUMMY_POST = """

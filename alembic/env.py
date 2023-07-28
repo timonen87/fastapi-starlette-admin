@@ -11,6 +11,8 @@ sys.path.append(os.path.join(sys.path[0], 'src'))
 from src.config import DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER
 from src.core import Base
 
+
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -37,6 +39,13 @@ target_metadata = Base.metadata
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
+
+def get_url():
+    from src.config import settings
+
+    sqlalchemy_url = settings.SQLALCHEMY_DATABASE_URI
+
+    return sqlalchemy_url
 
 
 def run_migrations_offline() -> None:

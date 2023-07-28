@@ -5,7 +5,20 @@ from sqlalchemy_file import ImageField, File
 from sqlalchemy_file.validators import SizeValidator
 
 from jinja2 import Template
-from sqlalchemy import Column, String, Integer, Enum, JSON, DateTime, ForeignKey, func, Text, sql, TEXT, Boolean
+from sqlalchemy import (
+    Column,
+    String,
+    Integer,
+    Enum,
+    JSON,
+    DateTime,
+    ForeignKey,
+    func,
+    Text,
+    sql,
+    TEXT,
+    Boolean,
+)
 from sqlalchemy.orm import relationship
 from pydantic import EmailStr
 from starlette.requests import Request
@@ -20,29 +33,30 @@ class Gender(str, enum.Enum):
     FEMALE = "female"
     UNKNOWN = "unknown"
 
+
 class User(Base):
-    __tablename__ = 'user'
+    __tablename__ = "user"
 
     id: int = Column(Integer, primary_key=True)
     full_name: str = Column(String(30), index=True)
     sex = Column(Enum(Gender), default=Gender.UNKNOWN, index=True)
     username: EmailStr = Column(String, index=True, nullable=False)
-    email: EmailStr = Column(String, index=True, default='mail@mail.ru')
-    hashed_password: str = Column(String, default='sdfsdfsdffsdffsd')
+    email: EmailStr = Column(String, index=True, default="mail@mail.ru")
+    hashed_password: str = Column(String, default="sdfsdfsdffsdffsd")
     is_admin: Boolean = Column(Boolean, default=False)
     is_active: Boolean = Column(Boolean, default=True)
-    avatar: Union[File, UploadFile, None] = Column(ImageField(
-        upload_storage="user-avatar",
-        thumbnail_size=(128, 128),
-        validators=[SizeValidator(max_size="100k")],
-    ))
-    # password: str = Column(String(20), nullable=False)
+    avatar: Union[File, UploadFile, None] = Column(
+        ImageField(
+            upload_storage="user-avatar",
+            thumbnail_size=(128, 128),
+            validators=[SizeValidator(max_size="100k")],
+        )
+    )
 
-    posts = relationship('Post', back_populates='publisher')
-    comments = relationship('Comment', back_populates='user')
+    posts = relationship("Post", back_populates="publisher")
+    comments = relationship("Comment", back_populates="user")
 
-
-    async  def __admin_reper__(self, request: Request):
+    async def __admin_reper__(self, request: Request):
         return self.full_name
 
     async def __admin_select2_repr__(self, request: Request) -> str:

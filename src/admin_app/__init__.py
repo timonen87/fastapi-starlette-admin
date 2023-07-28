@@ -1,4 +1,3 @@
-
 from typing import Optional
 
 import os
@@ -23,6 +22,7 @@ from models.user import User
 from models.post import Post
 from models.comment import Comment
 from admin_app.auth import MyAuthProvider
+
 # from blog.models import Comment, Post, User
 from admin_app.views import CommentView, HomeView, PostView, UserView
 
@@ -32,6 +32,7 @@ upload_dir: str = "upload/"
 os.makedirs(f"{upload_dir}/avatars", 0o777, exist_ok=True)
 container = get_driver(Provider.LOCAL)(upload_dir).get_container("avatars")
 StorageManager.add_storage("user-avatar", container)
+
 
 class Admin(BaseAdmin):
     def custom_render_js(self, request: Request) -> Optional[str]:
@@ -53,6 +54,7 @@ admin = Admin(
     middlewares=[Middleware(SessionMiddleware, secret_key=config.secret)],
     i18n_config=I18nConfig(default_locale="en", language_switcher=SUPPORTED_LOCALES),
 )
+
 
 admin.add_view(UserView(User, icon="fa fa-users"))
 admin.add_view(PostView(Post, label="blog Posts", icon="fa fa-blog"))
