@@ -17,7 +17,7 @@ from starlette_admin.i18n import SUPPORTED_LOCALES
 from starlette_admin.contrib.sqla import Admin as BaseAdmin
 from starlette_admin.views import Link
 
-from config import config
+from config import SECRET_AUTH
 from models.user import User
 from models.post import Post
 from models.comment import Comment
@@ -25,6 +25,7 @@ from admin_app.auth import MyAuthProvider
 
 # from blog.models import Comment, Post, User
 from admin_app.views import CommentView, HomeView, PostView, UserView
+
 
 __all__ = ["engine", "admin"]
 
@@ -44,15 +45,15 @@ class Admin(BaseAdmin):
 admin = Admin(
     engine,
     title="GetSpy Admin",
-    base_url="/admin/sqla",
+    base_url="/admin",
     route_name="admin-sqla",
     templates_dir="templates/admin/sqla",
     logo_url="https://preview.tabler.io/static/logo-white.svg",
     login_logo_url="https://preview.tabler.io/static/logo.svg",
     index_view=HomeView(label="Home", icon="fa fa-home"),
     auth_provider=MyAuthProvider(login_path="/sign-in", logout_path="/sign-out"),
-    middlewares=[Middleware(SessionMiddleware, secret_key=config.secret)],
-    i18n_config=I18nConfig(default_locale="en", language_switcher=SUPPORTED_LOCALES),
+    middlewares=[Middleware(SessionMiddleware, secret_key=SECRET_AUTH)],
+    i18n_config=I18nConfig(default_locale="ru", language_switcher=SUPPORTED_LOCALES),
 )
 
 

@@ -1,7 +1,9 @@
 from datetime import datetime, timedelta
 from typing import Any, List, Optional
 
-from fastapi import Depends, HTTPException, Response, status
+from fastapi import Depends, HTTPException, Response, status, Request
+
+from fastapi.templating import Jinja2Templates
 
 from fastapi import APIRouter
 from sqlalchemy.orm import Session
@@ -11,6 +13,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 # from fastapi_pagination.api import response
 # from fastapi_pagination.ext.sqlalchemy import paginate
 import schemas
+from models import User
 
 from core.database import get_db
 
@@ -24,14 +27,28 @@ from services import (
     get_users,
     update_user,
     get_current_active_user,
+    get_current_user,
 )
 from services.security import ACCESS_TOKEN_EXPIRE_MINUTES
 
+templates = Jinja2Templates(directory="templates/")
 
 router: Any = APIRouter(
     tags=["users"],
     responses={404: {"Description": "Not found"}},
 )
+
+
+# @router.get("/admin/home")
+# def get_index(request: Request, current_user: User = Depends(get_current_user)):
+#     try:
+#         return templates.TemplateResponse(
+#             "home/index.html", {"request": request, "user": current_user}
+#         )
+#     except:
+#         return templates.TemplateResponse(
+#             "home/examples-login.html", {"request": request}
+#         )
 
 
 @router.post(

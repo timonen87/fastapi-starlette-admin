@@ -17,6 +17,7 @@ REDIS_HOST = os.environ.get("REDIS_HOST")
 REDIS_PORT = os.environ.get("REDIS_PORT")
 
 SECRET_AUTH = os.environ.get("SECRET_AUTH")
+# SECRET_AUTH = "e95a3684b9982fcfd46eea716707f80cef515906eb49c4cb961dfde39a41ce21"
 
 SMTP_USER = os.environ.get("SMTP_USER")
 SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD")
@@ -28,7 +29,7 @@ class Config(BaseSettings):
     mongo_host: str = "mongodb://127.0.0.1:27017/"
     mongo_db: str = "demo"
     upload_dir: str = "upload/"
-    secret: str = os.environ.get("SECRET_AUTH")
+    # secret: str = os.environ.get("SECRET_AUTH")
     gtag: Optional[str] = None
 
 

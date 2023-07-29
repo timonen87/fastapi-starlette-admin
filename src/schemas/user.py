@@ -4,13 +4,13 @@ from pydantic import BaseModel, StrictBool, validator
 
 
 class UserBase(BaseModel):
+    id: int
     username: str
     email: str
     full_name: str
 
 
 class UserCreate(UserBase):
-    id: int
     password: str
 
     @validator("username")

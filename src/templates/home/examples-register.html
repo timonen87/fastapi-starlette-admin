@@ -1,6 +1,6 @@
 {% extends "layouts/base-fullscreen.html" %}
 
-{% block title %} Register {% endblock %} 
+{% block title %} Register {% endblock %}
 
 <!-- Element injected in the BODY element -->
 {% block body_class %} register-page {% endblock body_class %}
@@ -23,16 +23,16 @@
 
   <div class="register-box">
     <div class="register-logo">
-      <a href="/"><b>Admin</b>LTE</a>
+      <a href="/"><b>GetsPy</b>.RU</a>
     </div>
 
     <div class="card">
       <div class="card-body register-card-body">
-        <p class="login-box-msg">Register a new membership</p>
+        <p class="login-box-msg">Зарегистрируйте новый аккаунт</p>
 
-        <form action="../../index.html" method="post">
+        <form id="quickForm" method="post">
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Full name">
+            <input  id="cname" name="name" class="form-control" placeholder="Имя пользователя" value="{{ username }}" required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
@@ -40,7 +40,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="Email">
+            <input  class="form-control" name="email" value="{{ email }}" placeholder="Email" id="exampleInputEmail1">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -48,7 +48,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Password">
+            <input  type="password"class="form-control"  name="password" value="{{ password }}" placeholder="Password" id="exampleInputPassword1">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -56,44 +56,49 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Retype password">
+            <input type="password" class="form-control" placeholder="Подтвердите пароль" required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row form-group mb-0">
             <div class="col-8">
-              <div class="icheck-primary">
-                <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-                <label for="agreeTerms">
-                I agree to the <a href="#">terms</a>
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" id="exampleCheck1" name="terms" class="custom-control-input">
+                <label for="exampleCheck1" class="custom-control-label">
+                  Я согласен c <a href="#">правилами</a>
                 </label>
               </div>
             </div>
             <!-- /.col -->
             <div class="col-4">
-              <button type="submit" class="btn btn-primary btn-block">Register</button>
+              <button type="submit" class="btn btn-primary btn-block">Войти</button>
             </div>
             <!-- /.col -->
           </div>
         </form>
 
         <div class="social-auth-links text-center">
-          <p>- OR -</p>
-          <a href="#" class="btn btn-block btn-primary">
-            <i class="fab fa-facebook mr-2"></i>
-            Sign up using Facebook
-          </a>
-          <a href="#" class="btn btn-block btn-danger">
-            <i class="fab fa-google-plus mr-2"></i>
-            Sign up using Google+
+          <p>    <div class="d-grid">
+            {% if error %}
+           <span class="text-danger">{{ error }}</span>
+            {% endif %}
+        </div></p>
+        <a href="#" class="btn btn-block btn-danger mb-3">
+          <i class="fab fa-google-plus mr-2"></i> Войти через Github.com
+        </a>
+          <a href="#" class="btn btn-block btn-gray mb-3">
+            <i class="fab fa-google-plus mr-2"></i> Войти через Google
           </a>
         </div>
 
-        <a href="/examples-login.html" class="text-center">I already have a membership</a>
+        <a href="/signin" class="text-center">У меня уже есть аккаунт</a>
       </div>
+
+
+
       <!-- /.form-box -->
     </div><!-- /.card -->
   </div>
@@ -107,6 +112,52 @@
   <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap 4 -->
   <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/assets/plugins/jquery-validation/jquery.validate.min.js"></script>
+  <script src="/static/assets/plugins/jquery-validation/additional-methods.min.js"></script>
+
+  <script>
+    $(function () {
+      $.validator.setDefaults({
+
+      });
+      $('#quickForm').validate({
+        rules: {
+          email: {
+            required: true,
+            email: true,
+          },
+          password: {
+            required: true,
+            minlength: 5
+          },
+          terms: {
+            required: true
+          },
+        },
+        messages: {
+          email: {
+            required: "Пожалуйста, введите адрес электронной почты",
+            email: "Пожалуйста, введите адрес электронной почты"
+          },
+          password: {
+            required: "Пожалуйста, укажите пароль",
+            minlength: "Длина вашего пароля должна составлять не менее 5 символов"
+          },
+          terms: "Пожалуйста, примите наши условия"
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+          error.addClass('invalid-feedback');
+          element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+          $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+          $(element).removeClass('is-invalid');
+        }
+      });
+    });
+    </script>
 
 {% endblock javascripts %}
-

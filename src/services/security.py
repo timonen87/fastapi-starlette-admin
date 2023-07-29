@@ -8,15 +8,18 @@ from jose import jwt
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
-from config import config
-
+# from config import config
+from services.cookie import OAuth2PasswordBearerWithCookie
 from .users import get_user_by_username
+
+from config import SECRET_AUTH
 
 ALGORITHM: str = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
 pwd_context: Any = CryptContext(schemes=["pbkdf2_sha512"], deprecated="auto")
-oauth2_scheme: Any = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme_token: Any = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme_signin = OAuth2PasswordBearerWithCookie(tokenUrl="signin")
 
 
 def get_hash_password(password: str) -> Any:
@@ -43,5 +46,5 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
     else:
         expire = datetime.utcnow() + timedelta(minutes=15)
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, config.secret, algorithm=ALGORITHM)
+    encoded_jwt = jwt.encode(to_encode, SECRET_AUTH, algorithm=ALGORITHM)
     return encoded_jwt
